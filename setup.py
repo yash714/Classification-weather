@@ -4,9 +4,9 @@ import setuptools
 __version__ = "0.0.0"
 
 REPO_NAME = "Weather-Classification--Project"
-AUTHOR_USER_NAME = "Shivam"
+AUTHOR_USER_NAME = "Yash"
 SRC_REPO = "cnnClassifier"
-AUTHOR_EMAIL = "shivamrana120000@gmail.com"
+AUTHOR_EMAIL = "yashsharma09147@gmail.com"
 
 
 setuptools.setup(

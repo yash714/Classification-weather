@@ -2,7 +2,7 @@
 
 ## Docker pull
 ```bash
-docker pull ghcr.io/shivamranaaa/weather-classification:main
+docker pull ghcr.io/
 ```
 
 ## Code Workflows
@@ -23,16 +23,16 @@ docker pull ghcr.io/shivamranaaa/weather-classification:main
 Clone the repository
 
 ```bash
-https://github.com/shivamranaaa/Weather-Classification.git
+https://github.com/yash714/weather-classification.git
 ```
 ### STEP 01- Create a conda environment after opening the repository
 
 ```bash
-conda create -n summary python=3.8.8 -y
+conda create -n weather_classification python=3.8.8 -y
 ```
 
 ```bash
-conda activate summary
+conda activate weather_classification
 ```
 
 
@@ -54,8 +54,8 @@ open up you local host and port
 
 
 ```bash
-Author: Shivam
-Email: Shivamrana12321@gmail.com
+Author: Yash
+Email: yashsharma09147@gmail.com
 
 ```
 
