@@ -2,7 +2,7 @@
 
 ## Docker pull
 ```bash
-docker pull ghcr.io/
+docker pull ghcr.io/yash714/classification-weather:sha256-8af278ec8062bff96a063dbdc497602db9a6a78f6d4e78982a0b9259e5783a71.sig
 ```
 
 ## Code Workflows
