@@ -1,0 +1,117 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python src/cnnClassifier/pipeline/stage_01_data_ingestion.py
+    deps:
+    - path: config/config.yaml
+      hash: md5
+      md5: 3a7b95608e0204bf0241a0c7ea4f0442
+      size: 791
+    - path: src/cnnClassifier/pipeline/stage_01_data_ingestion.py
+      hash: md5
+      md5: 2715ce06db2ae2f4e02c0d484b131b2b
+      size: 916
+    outs:
+    - path: artifacts/data_ingestion/Weather_Dataset
+      hash: md5
+      md5: 6dbd7b9f8367830a973f402ecfea9b92.dir
+      size: 15512381
+      nfiles: 187
+  prepare_base_model:
+    cmd: python src/cnnClassifier/pipeline/stage_02_prepare_base_model.py
+    deps:
+    - path: config/config.yaml
+      hash: md5
+      md5: 3a7b95608e0204bf0241a0c7ea4f0442
+      size: 791
+    - path: src/cnnClassifier/pipeline/stage_02_prepare_base_model.py
+      hash: md5
+      md5: bdc031b38a1dbe1f55b87890ca0620e2
+      size: 1003
+    params:
+      params.yaml:
+        CLASSES: 4
+        IMAGE_SIZE:
+        - 224
+        - 224
+        - 3
+        INCLUDE_TOP: false
+        LEARNING_RATE: 0.01
+        WEIGHTS: imagenet
+    outs:
+    - path: artifacts/prepare_base_model
+      hash: md5
+      md5: 0bc86c2fd153c28685af3f97c728694e.dir
+      size: 118259952
+      nfiles: 2
+  training:
+    cmd: python src/cnnClassifier/pipeline/stage_03_training.py
+    deps:
+    - path: artifacts/data_ingestion/Weather_Dataset
+      hash: md5
+      md5: 6dbd7b9f8367830a973f402ecfea9b92.dir
+      size: 15512381
+      nfiles: 187
+    - path: artifacts/prepare_base_model
+      hash: md5
+      md5: 0bc86c2fd153c28685af3f97c728694e.dir
+      size: 118259952
+      nfiles: 2
+    - path: config/config.yaml
+      hash: md5
+      md5: 3a7b95608e0204bf0241a0c7ea4f0442
+      size: 791
+    - path: src/cnnClassifier/components/prepare_callbacks.py
+      hash: md5
+      md5: b2ce5ce83dcdd4b9b6735172b51681f2
+      size: 1008
+    - path: src/cnnClassifier/pipeline/stage_03_training.py
+      hash: md5
+      md5: cdf3bf652f354b6e1785bc57ff694e36
+      size: 1268
+    params:
+      params.yaml:
+        AUGMENTATION: true
+        BATCH_SIZE: 16
+        EPOCHS: 3
+        IMAGE_SIZE:
+        - 224
+        - 224
+        - 3
+    outs:
+    - path: artifacts/training/model.h5
+      hash: md5
+      md5: 1a3c2867317b488d04dbdc5204b5fe9d
+      size: 59742128
+  evaluation:
+    cmd: python src/cnnClassifier/pipeline/stage_04_evaluation.py
+    deps:
+    - path: artifacts/data_ingestion/Weather_Dataset
+      hash: md5
+      md5: 6dbd7b9f8367830a973f402ecfea9b92.dir
+      size: 15512381
+      nfiles: 187
+    - path: artifacts/training/model.h5
+      hash: md5
+      md5: 1a3c2867317b488d04dbdc5204b5fe9d
+      size: 59742128
+    - path: config/config.yaml
+      hash: md5
+      md5: 3a7b95608e0204bf0241a0c7ea4f0442
+      size: 791
+    - path: src/cnnClassifier/pipeline/stage_04_evaluation.py
+      hash: md5
+      md5: 18d8a46a52eb6a0e625b1890cfa263c5
+      size: 883
+    params:
+      params.yaml:
+        BATCH_SIZE: 16
+        IMAGE_SIZE:
+        - 224
+        - 224
+        - 3
+    outs:
+    - path: scores.json
+      hash: md5
+      md5: 56007c44643e5b9ade5108beea159e35
+      size: 74
